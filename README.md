@@ -26,7 +26,7 @@ Apple App Store numeric ID (e.g. `553834731`).
 Requires Python 3.11+.
 
 ```powershell
-git clone <this-repo>
+git clone https://github.com/max-crab/appgoblin-mcp.git
 cd appgoblin-mcp
 python -m venv .venv
 .\.venv\Scripts\python -m pip install -e .[dev]
