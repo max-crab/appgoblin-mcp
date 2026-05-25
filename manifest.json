@@ -1,0 +1,71 @@
+{
+  "manifest_version": "0.4",
+  "name": "appgoblin-mcp",
+  "display_name": "AppGoblin",
+  "version": "0.1.0",
+  "description": "MCP tools for the AppGoblin public v1 API: app metadata, ranks, SDKs, and companies.",
+  "long_description": "Exposes the AppGoblin public v1 API (https://appgoblin.info) as five MCP tools: get_app, get_app_ranks, get_app_sdks, list_companies, get_company. Each teammate brings their own API key (entered once on install).",
+  "author": {
+    "name": "Massimo Caroli",
+    "email": "massimo@myappfree.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/max-crab/appgoblin-mcp.git"
+  },
+  "homepage": "https://github.com/max-crab/appgoblin-mcp",
+  "keywords": ["appgoblin", "app-store", "sdk-intelligence", "mobile", "mcp"],
+  "server": {
+    "type": "uv",
+    "entry_point": "src/appgoblin_mcp/__main__.py",
+    "mcp_config": {
+      "command": "uv",
+      "args": [
+        "run",
+        "--directory",
+        "${__dirname}",
+        "src/appgoblin_mcp/__main__.py"
+      ],
+      "env": {
+        "APPGOBLIN_API_KEY": "${user_config.api_key}"
+      }
+    }
+  },
+  "user_config": {
+    "api_key": {
+      "type": "string",
+      "title": "AppGoblin API Key",
+      "description": "Get one at https://appgoblin.info/account/api-keys",
+      "sensitive": true,
+      "required": true
+    }
+  },
+  "tools": [
+    {
+      "name": "get_app",
+      "description": "Get public metadata for a single app (MAU, recent installs, estimated revenue signals)."
+    },
+    {
+      "name": "get_app_ranks",
+      "description": "Best-rank records across countries, collections, and categories over the last 90 days."
+    },
+    {
+      "name": "get_app_sdks",
+      "description": "Detected SDKs, declared permissions, package queries, and SKAdNetwork entries."
+    },
+    {
+      "name": "list_companies",
+      "description": "Public company index with client-side filter (name_contains), limit, and sort_by."
+    },
+    {
+      "name": "get_company",
+      "description": "Company overview by domain (requires a paid AppGoblin tier; free keys return a structured 403)."
+    }
+  ],
+  "compatibility": {
+    "platforms": ["darwin", "linux", "win32"],
+    "runtimes": {
+      "python": ">=3.11"
+    }
+  }
+}

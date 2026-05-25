@@ -53,9 +53,24 @@ Verify locally:
 
 ## Use with Claude Desktop
 
-Add this to your Claude Desktop config
-(`%APPDATA%\Claude\claude_desktop_config.json` on Windows,
-`~/Library/Application Support/Claude/claude_desktop_config.json` on macOS):
+### Recommended: install the `.mcpb` extension
+
+1. Download the latest `appgoblin-mcp-<version>.mcpb` from the
+   [Releases page](https://github.com/max-crab/appgoblin-mcp/releases).
+2. Open Claude Desktop → Settings → Extensions → drag the `.mcpb` in (or
+   double-click it).
+3. When prompted, paste your AppGoblin API key. Done.
+
+Claude Desktop will use its bundled `uv` to set up Python deps on first launch —
+no manual `pip install`, no path editing, no JSON config. The five tools appear
+under the `appgoblin` server. Try: *"Pull AppGoblin metadata and SDKs for
+com.king.candycrushsaga."*
+
+### Manual JSON config (fallback)
+
+If you'd rather run from a local clone, edit
+`%APPDATA%\Claude\claude_desktop_config.json` (Windows) or
+`~/Library/Application Support/Claude/claude_desktop_config.json` (macOS):
 
 ```json
 {
@@ -70,9 +85,6 @@ Add this to your Claude Desktop config
   }
 }
 ```
-
-Restart Claude Desktop. The five tools above will show up under the `appgoblin`
-server. Try: *"Pull AppGoblin metadata and SDKs for com.king.candycrushsaga."*
 
 ## Use with Claude Code
 
@@ -96,6 +108,21 @@ structured 403 payload, not an exception).
 | `APPGOBLIN_API_KEY`         | *(required)*           | Your token                     |
 | `APPGOBLIN_BASE_URL`        | `https://appgoblin.info` | Override for staging/proxy   |
 | `APPGOBLIN_TIMEOUT_SECONDS` | `30`                   | httpx timeout                  |
+
+## Building the `.mcpb`
+
+The `.mcpb` is rebuilt automatically by
+[`.github/workflows/release.yml`](.github/workflows/release.yml) on every tag
+push: tag a release (`git tag v0.1.1 && git push --tags`) and the workflow
+attaches a fresh `appgoblin-mcp-<version>.mcpb` to the GitHub Release.
+
+To build one locally (requires Node and `uv`):
+
+```powershell
+npx --yes @anthropic-ai/mcpb pack . appgoblin-mcp.mcpb
+```
+
+`manifest.json` and `.mcpbignore` at the repo root control what goes in.
 
 ## Remote deploy (later)
 
